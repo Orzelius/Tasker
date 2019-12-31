@@ -5,7 +5,6 @@ import Dasboard from './components/dashboard/Dashboard';
 import TaskDetails from './components/tasks/TaskDetails'
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
-import CreateTask from './components/tasks/CreateTask';
 
 const App: React.FC = () => {
   return (
@@ -18,7 +17,6 @@ const App: React.FC = () => {
           <Route path='/task/:id' component={TaskDetails}/>
           <Route path='/signin' component={SignIn}/>
           <Route path='/signup' component={SignUp}/>
-          <Route path='/create' component={CreateTask}/>
         </Switch>
       </div>
     </BrowserRouter>

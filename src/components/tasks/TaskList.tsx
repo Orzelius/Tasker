@@ -9,7 +9,7 @@ type props = {
 const TaskList: React.FC<props> = ({tasks}) => {
   const taskSummaries = tasks && tasks.map(task => {
     return(
-      <TaskSummary task={task}></TaskSummary>
+      <TaskSummary key={task.key} task={task}></TaskSummary>
     )
   });
   return(

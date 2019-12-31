@@ -15,3 +15,11 @@ code {
 form{
   margin-top: 40px;
 }
+
+.edit-button:hover{
+  color: black;
+}
+
+.delete-button:hover{
+  color: red;
+}

@@ -1,5 +1,5 @@
 import {User} from '../types/models';
-import {UserAction} from '../types/actions';
+import {UserAction} from '../types/types';
 
 const initState: User = 
   {loggedIn: false }
