@@ -6,15 +6,31 @@ type props = {
   tasks: Task[]
 }
 
-const TaskList: React.FC<props> = ({tasks}) => {
-  const taskSummaries = tasks && tasks.map(task => {
-    return(
-      <TaskSummary key={task.key} task={task}></TaskSummary>
-    )
+const TaskList: React.FC<props> = ({ tasks }) => {
+
+  const arrDone = tasks.map(task => {
+    if (task.marked_as_done) {
+      return (
+        <TaskSummary key={task.id} task={task}/>
+      )
+    }
+    return undefined;
   });
-  return(
+
+  const arrNotDone = tasks.map(task => {
+    if (!task.marked_as_done) {
+      return (
+        <TaskSummary key={task.id} task={task}/>
+      )
+    }
+    return undefined;
+  });
+
+  return (
     <div className="task-list section">
-      {taskSummaries}
+      {arrNotDone}
+      <h4>Done tasks:</h4>
+      {arrDone}
     </div>
   );
 }

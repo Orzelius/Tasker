@@ -1,8 +1,8 @@
 
 export interface Task {
-  key?: string,
+  id: string,
   title: string,
-  desc?: string,
+  desc: string,
   marked_as_done?: boolean,
   created_at?: number
 }

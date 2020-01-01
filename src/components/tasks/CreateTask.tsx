@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { ThunkAddTask } from '../../store/actions/taskActions';
 import { Task } from '../../store/types/models';
 import { useDispatch } from 'react-redux';
+import uuid from 'uuid';
 
 
 const CreateTaskFC: React.FC = () => {
@@ -35,12 +36,13 @@ const CreateTaskFC: React.FC = () => {
 
     if(state.title.length === 0){
       var newState = {...state};
-      newState.errorMsg="A post has to have a title";
+      newState.errorMsg="A task has to have a title";
       newState.error = true;
       setState(newState);
       return;
     }
     var task: Task = {
+      id: uuid(),
       title: state.title,
       desc: state.description
     }
