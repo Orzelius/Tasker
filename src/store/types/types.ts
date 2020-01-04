@@ -1,4 +1,4 @@
-import { Task, User } from "./models";
+import { Task, Auth, AsyncActionStatus } from "./models";
 import { ThunkAction } from "redux-thunk";
 import { AppState } from "../reducers/rootReducer";
 
@@ -27,15 +27,26 @@ interface SetTaskAction {
 
 
 //USER ACTIONS
-const LOGIN = "LOGIN"
+export const LOGIN = "LOGIN"
+export const LOGOUT = "LOGOUT"
+export const SET_STATUS = "SET_FETCH"
 
-interface Login{
+interface LoginAction{
   type: typeof LOGIN;
-  user: User
+  auth: Auth
+}
+interface LogoutAction{
+  type: typeof LOGOUT;
+}
+interface FetchingAction{
+  type: typeof SET_STATUS;
+  status: AsyncActionStatus;
 }
 
+
+export type ThunkResult<R> = ThunkAction<R, AppState, undefined, AppAction>;
 export type AppThunk = ThunkAction<void, AppState, null, AppAction>
 
-export type UserAction = Login;
+export type AuthAction = LoginAction | LogoutAction | FetchingAction;
 export type TaskAction = SetTaskAction | AddTaskAction | RemoveTaskAction | EditTaskAction;
-export type AppAction = TaskAction | UserAction;
+export type AppAction = TaskAction | AuthAction;

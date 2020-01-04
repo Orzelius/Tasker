@@ -1,40 +1,30 @@
-import React, { Component } from 'react'
+import React from 'react';
+import MyForm from '../form/MyForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { ThunkLogin} from '../../store/actions/authActions';
+import { AppState } from '../../store/reducers/rootReducer';
+import { AsyncActionStatus } from '../../store/types/models';
+import { Redirect } from 'react-router-dom';
 
- class SignIn extends Component {
-  state= {
-    email: '',
-    password: ''
+
+const SignIn: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const loginStatus = useSelector((state: AppState) => state.auth.status);
+
+  const handleSubmit = (password: string, userName: string) => {
+    dispatch(ThunkLogin(userName, password));
   }
-  handleChange = (e: React.ChangeEvent<{value: string, id: string}>) =>{
-    this.setState({
-      [e.target.id]: e.target.value
-    });
+
+  if(loginStatus === AsyncActionStatus.SUCCEEDED){
+    return <Redirect to='/'/>
   }
-  handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
-    e.preventDefault();
-    console.log(this.state);
-  }
-  render() {
-    return (
-      <div className="container">
-        <form className="white" onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-4">Sign in</h5>
-          <br/>
-          <div className="input-field">
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" onChange={this.handleChange}/>
-          </div>
-          <div className="input-field">
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" onChange={this.handleChange}/>
-          </div>
-          <div className="input-field">
-            <button className="btn pink lighten-1">Login</button>
-          </div>
-        </form>
-      </div>
-    )
-  }
+
+  return(
+    <div className="container">
+      <MyForm onSubmit={({password, userName}) => handleSubmit(password, userName)}></MyForm>
+    </div>
+  )
 }
 
 export default SignIn;

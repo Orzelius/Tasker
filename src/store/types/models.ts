@@ -6,8 +6,25 @@ export interface Task {
   marked_as_done?: boolean,
   created_at?: number
 }
-export interface User {
+export interface Auth {
   loggedIn: boolean
-  session?: string
-  userName?: string
+  status: AsyncActionStatus
+  user?: User
+}
+
+export interface User {
+  access_token: string
+  created_at: string
+  firstname: string
+  id: string
+  lastname: string
+  session: string
+  username: string
+}
+
+export enum AsyncActionStatus {
+  UNSTARTED = 'UNSTARTED',
+  STARTED = 'STARTED',
+  SUCCEEDED = 'SUCCEEDED',
+  FAILED = 'FAILED',
 }

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { ThunkRemoveTask, ThunkEditTask } from '../../store/actions/taskActions';
 import { Link } from 'react-router-dom';
 
-type props = { task: Task}
+type props = { task: Task }
 
 function getDate(unix: number | undefined): string {
   if (!unix) {
@@ -39,9 +39,9 @@ const TaskSummary: React.FC<props> = ({ task }) => {
         <div className="card-content darken-3">
           <div className="right">
             <a className="check button btn-flat right">
-              <i className="material-icons" onClick={handleMark}>check</i>
+              <i className="material-icons" onClick={handleMark}>brush</i>
             </a>
-            <br/>
+            <br />
             <a className="delete  btn-flat button right" onClick={handleDelete}>
               <i className="material-icons">delete</i>
             </a>

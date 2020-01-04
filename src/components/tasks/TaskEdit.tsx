@@ -64,7 +64,7 @@ function TaskEdit({ match }: RouteComponentProps<TParams>) {
         id: state.task.id,
         title: state.task.title,
         desc: state.task.desc,
-        marked_as_done: !state.task.marked_as_done
+        marked_as_done: state.task.marked_as_done
       }
 
       dispact(ThunkEditTask(task));
@@ -90,11 +90,11 @@ function TaskEdit({ match }: RouteComponentProps<TParams>) {
         <div className="input-field">
           <p>
             <label>
-              <input className="with-gap" name="group1" type="radio" onChange={handleBullet} defaultChecked={task?.marked_as_done} />
+              <input className="with-gap" name="group1" type="radio" onChange={handleBullet} defaultChecked={!task?.marked_as_done} />
               <span>In progress</span>
             </label>
             <label className="checkbox">
-              <input className="with-gap" name="group1" type="radio" onChange={handleBullet} defaultChecked={!task?.marked_as_done} />
+              <input className="with-gap" name="group1" type="radio" onChange={handleBullet} defaultChecked={task?.marked_as_done} />
               <span>Complete</span>
             </label>
           </p>
