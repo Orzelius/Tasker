@@ -4,8 +4,11 @@ import { Task } from '../../store/types/models';
 import { useDispatch } from 'react-redux';
 import uuid from 'uuid';
 
+interface Props {
+  access_token: string;
+}
 
-const CreateTaskFC: React.FC = () => {
+const CreateTaskFC: React.FC<Props> = ({access_token}) => {
   const [state, setState] = useState({
     title: "",
     description: "",
@@ -47,7 +50,7 @@ const CreateTaskFC: React.FC = () => {
       desc: state.description
     }
 
-    dispact(ThunkAddTask(task));
+    dispact(ThunkAddTask(task, access_token));
   }
 
   return (

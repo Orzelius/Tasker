@@ -4,7 +4,6 @@ import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 import { useSelector } from 'react-redux';
 import { AppState } from '../../store/reducers/rootReducer';
-import { AsyncActionStatus } from '../../store/types/models';
 
 const Navbar: React.FC = () => {
   const loggedIn = useSelector((state: AppState) => state.auth.loggedIn);

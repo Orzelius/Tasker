@@ -1,5 +1,5 @@
 import {Task} from '../types/models';
-import {TaskAction, ADD_TASK, REMOVE_TASK, EDIT_TASK} from '../types/types';
+import {TaskAction, ADD_TASK, REMOVE_TASK, EDIT_TASK, SET_TASK} from '../types/types';
 
 const initState: Task[] = [
   {title: "Examaple Task" ,created_at: Date.now(), desc:"example description", id: "0", marked_as_done: false },
@@ -27,7 +27,8 @@ const taskReducer = (state = initState, action: TaskAction): Task[] => {
           ...action.task
         }
       })
-
+    case(SET_TASK):
+      return action.tasks;
     default:
       return state;
   }

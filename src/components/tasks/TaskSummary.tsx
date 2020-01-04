@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { Task } from '../../store/types/models';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ThunkRemoveTask, ThunkEditTask } from '../../store/actions/taskActions';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { AppState } from '../../store/reducers/rootReducer';
 
 type props = { task: Task }
 
@@ -11,7 +12,7 @@ function getDate(unix: number | undefined): string {
   if (!unix) {
     return ("undefined");
   }
-  var date = new Date(unix * 1000);
+  var date = new Date(unix);
   var hours = date.getHours();
   // Minutes part from the timestamp
   var minutes = "0" + date.getMinutes();
@@ -22,14 +23,21 @@ function getDate(unix: number | undefined): string {
 
 const TaskSummary: React.FC<props> = ({ task }) => {
   const dispatch = useDispatch();
+  const access_token = useSelector((state: AppState) => (state.auth.user?.access_token));
+
+  if(!access_token){
+    return(
+      <Redirect to="/home"/>
+    );
+  }
 
   const handleDelete = () => {
-    dispatch(ThunkRemoveTask(task.id));
+    dispatch(ThunkRemoveTask(task.id, access_token));
   }
   const handleMark = () => {
     let newTask = { ...task };
     newTask.marked_as_done = !newTask.marked_as_done;
-    dispatch(ThunkEditTask(newTask))
+    dispatch(ThunkEditTask(newTask, access_token))
   }
 
   let taskJsx: JSX.Element;

@@ -47,7 +47,7 @@ const MyForm: React.FC<Props> = ({ onSubmit }) => {
             <Field name="userName" placeholder="UserName" type="text" label="UserName" component={MyField}></Field>
             <Field name="password" placeholder="" type="password" label="Password" component={MyField}></Field>
             <div className="input-field">
-              <button style={{padding: 4, width: "5em"}} className="btn pink lighten-1" type="submit">{button}</button>
+              <button style={{padding: 2, width: "5em"}} className="btn pink lighten-1" type="submit">{button}</button>
             </div>
           </Form>
         )}

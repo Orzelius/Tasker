@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import * as React from 'react';
-import { RouteComponentProps, useHistory, Link } from 'react-router-dom';
+import { RouteComponentProps, useHistory, Link, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../store/reducers/rootReducer';
 import { Task } from '../../store/types/models';
@@ -9,16 +9,23 @@ import { ThunkEditTask } from '../../store/actions/taskActions';
 type TParams = { id: string };
 
 function TaskEdit({ match }: RouteComponentProps<TParams>) {
-  let task = useSelector((state: AppState) => state.tasks).find(x => x.id === match.params.id);
+  let task = useSelector((state: AppState) => state.tasks).find(x => x.id.toString() === match.params.id);
+  let access_token = useSelector((state: AppState) => state.auth.user?.access_token);
+
   const [state, setState] = React.useState({task: {title: task?.title, desc: task?.desc, marked_as_done: false, id: task?.id}, error: false, errorMsg: ""});
   const history = useHistory();
   const dispact = useDispatch();
-  
+    
+  if(!access_token){
+    return(
+      <Redirect to='/'/>
+    );
+  }
   if(!task){
     return(
       <div className="container">
         <h5>This task was not found</h5>
-    </div>
+      </div>
     )
   }
 
@@ -52,7 +59,7 @@ function TaskEdit({ match }: RouteComponentProps<TParams>) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if(state.task && state.task.id && state.task.desc){
+    if(state.task && state.task.id && state.task.desc && access_token){
       if(!state.task.title){
         var newState = {...state};
         newState.errorMsg="A task has to have a title";
@@ -67,7 +74,7 @@ function TaskEdit({ match }: RouteComponentProps<TParams>) {
         marked_as_done: state.task.marked_as_done
       }
 
-      dispact(ThunkEditTask(task));
+      dispact(ThunkEditTask(task, access_token));
       history.push("/");
     }
   }

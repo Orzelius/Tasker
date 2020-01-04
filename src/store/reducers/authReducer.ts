@@ -15,7 +15,7 @@ const authReducer = (state = initState, action: AuthAction): Auth => {
       }
       return auth;
     case (SET_STATUS):
-      return ({loggedIn: state.loggedIn, status: action.status});
+      return ({loggedIn: state.loggedIn, status: action.status, user: state.user});
     default:
       return state;
   }
