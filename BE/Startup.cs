@@ -13,32 +13,39 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System;
 using Tasker.Data;
+using System.Linq;
+using Tasker.Data.MappingProfiles;
 
-namespace Tasker
-{
-    public class Startup
-    {
+namespace Tasker {
+    public class Startup {
         private readonly IWebHostEnvironment _env;
         private readonly IConfiguration _configuration;
 
-        public Startup(IWebHostEnvironment env, IConfiguration configuration)
-        {
+        public Startup(IWebHostEnvironment env, IConfiguration configuration) {
             _env = env;
             _configuration = configuration;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            // use sql server db in production and sqlite db in development
-            if (_env.IsProduction())
-                services.AddDbContext<DataContext>();
-            else
-                services.AddDbContext<DataContext, SqliteDataContext>();
+        public void ConfigureServices(IServiceCollection services) {
+            //// use sql server db in production and sqlite db in development
+            //if (_env.IsProduction())
+            //    services.AddDbContext<DataContext>();
+            //else
+            services.AddDbContext<DataContext, SqliteDataContext>();
 
             services.AddCors();
             services.AddControllers();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new ProjectProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddMvc();
             services.AddSingleton<UserProvider>();
 
             services.AddScoped<IUserService, UserService>();
@@ -51,24 +58,19 @@ namespace Tasker
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-            services.AddAuthentication(x =>
-            {
+            services.AddAuthentication(x => {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(x =>
-            {
-                x.Events = new JwtBearerEvents
-                {
-                    OnTokenValidated = context =>
-                    {
+            .AddJwtBearer(x => {
+                x.Events = new JwtBearerEvents {
+                    OnTokenValidated = context => {
                         var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
                         var userProvider = context.HttpContext.RequestServices.GetRequiredService<UserProvider>();
                         var userId = int.Parse(context.Principal.Identity.Name);
                         var user = userService.GetById(userId);
                         userProvider.setUser(user);
-                        if (user == null)
-                        {
+                        if (user == null) {
                             // return unauthorized if user no longer exists
                             context.Fail("Unauthorized");
                         }
@@ -77,8 +79,7 @@ namespace Tasker
                 };
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
+                x.TokenValidationParameters = new TokenValidationParameters {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
@@ -91,10 +92,21 @@ namespace Tasker
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
-        {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext) {
             // migrate any database changes on startup (includes initial db creation)
-            dataContext.Database.Migrate();
+            //dataContext.Database.Migrate();
+            dataContext.Database.EnsureCreated();
+            if (dataContext.Tasks.Count() == 0) {
+                //dataContext.Database.EnsureDeleted();
+                for (int i = 0; i < 10; i++) {
+                    dataContext.Tasks.Add(new Data.Task() {
+                        Created_at = DateTime.Now,
+                        Desc = Faker.TextFaker.Sentence(),
+                        Marked_as_done = false,
+                        Title = Faker.TextFaker.Sentence()
+                    });
+                }
+            }
 
             app.UseRouting();
 
