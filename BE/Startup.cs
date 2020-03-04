@@ -43,7 +43,10 @@ namespace Tasker {
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
+
+            //services.AddSingleton(mapper);
+            services.AddAutoMapper(GetType().Assembly);
+
 
             services.AddMvc();
             services.AddSingleton<UserProvider>();

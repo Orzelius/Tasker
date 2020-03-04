@@ -26,6 +26,7 @@ namespace Tasker.Controllers {
 
         // GET: api/Task
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult GetAll() {
             return Ok(_taskService.GetAll());
         }
