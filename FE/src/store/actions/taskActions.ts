@@ -5,6 +5,8 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { Status } from "./globalActions";
 import Axios, { AxiosResponse } from "axios";
 
+const apiUrl = "http://localhost:4000/task/";
+
 const addTask = (task: Task): TaskAction => {
   return {
     type: ADD_TASK,
@@ -33,14 +35,15 @@ const setTask = (tasks: Task[]): TaskAction => {
 export const ThunkAddTask = (task: Task, access_token: string): AppThunk => async dispatch => {
   // const asyncResp = await exampleAPI()
   console.log("Adding task", task);
-  Axios.post('http://demo2.z-bit.ee/tasks', { title: task.title, desc: task.desc }, {
+  Axios.post(apiUrl, { title: task.title, desc: task.desc }, {
     headers: {
       'Authorization': 'Bearer ' + access_token
     }
   })
     .then(function (response) {
       console.log(response);
-      if (response.status === 201) {
+      if (response.status === 201 || response.status === 200 ) {
+        console.log(response.status);
         dispatch(addTask(task));
       }
     })
@@ -51,13 +54,14 @@ export const ThunkAddTask = (task: Task, access_token: string): AppThunk => asyn
 }
 export const ThunkRemoveTask = (id: string, access_token: string): AppThunk => async dispatch => {
   // const asyncResp = await exampleAPI()
-  Axios.delete('http://demo2.z-bit.ee/tasks/' + id, {
+  console.log("Deleting task: ", id)
+  Axios.delete(apiUrl + id, {
     headers: {
       'Authorization': 'Bearer ' + access_token
     }
   })
     .then(function (response) {
-      if (response.status === 204) {
+      if (response.statusText === "OK") {
         dispatch(removeTask(id));
       }
     })
@@ -67,7 +71,7 @@ export const ThunkRemoveTask = (id: string, access_token: string): AppThunk => a
 }
 export const ThunkEditTask = (task: Task, access_token: string): AppThunk => async dispatch => {
   // const asyncResp = await exampleAPI()
-  Axios.put('http://demo2.z-bit.ee/tasks/' + task.id, task, {
+  Axios.put(apiUrl + task.id, task, {
     headers: {
       'Authorization': 'Bearer ' + access_token
     }
@@ -87,7 +91,7 @@ export const ThunkGetTasks = (access_token: string): ThunkAction<Promise<boolean
     return new Promise<boolean>((resolve) => {
       dispatch(Status(AsyncActionStatus.STARTED));
       console.log("Getting tasks")
-      Axios.get<Task[]>('http://demo2.z-bit.ee/tasks', {
+      Axios.get<Task[]>(apiUrl, {
         headers: {
           'Authorization': 'Bearer ' + access_token
         }

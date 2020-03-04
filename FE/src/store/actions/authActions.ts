@@ -51,20 +51,20 @@ export const ThunkLogout = (): AppThunk => async dispatch => {
 export const ThunkRegister = (user: User, password: string): ThunkAction<Promise<boolean>, {}, {}, AppAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AppAction>): Promise<boolean> => {
     return new Promise<boolean>((resolve) => {
-      Axios.post('http://demo2.z-bit.ee/users', {
+      Axios.post('http://localhost:4000/users/register', {
         username: user.username,
-        firstname: user.firstname,
+        firstName: user.firstname,
         lastName: user.lastname,
-        newPassword: password
+        password: password
       })
         .then((res) => {
-          console.log(res);
+          console.log("Response: ", res);
           if(res.status === 201){
             dispatch(ThunkLogin(user.username, password));
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.log("Error!!! ", error);
         })
     });
   }
@@ -80,20 +80,22 @@ export const ThunkLogin = (username: string, password: string): ThunkAction<Prom
       }
       dispatch(Status(AsyncActionStatus.STARTED));
       console.log('Login in progress');
-      Axios.post('http://demo2.z-bit.ee/users/get-token', {
+      Axios.post('http://localhost:4000/users/authenticate', {
         username,
         password
       })
         .then((res: AxiosResponse<User>) => {
+          console.log(res);
           const data = res.data;
-          if (data.access_token) {
+          if (data.token) {
             auth = { loggedIn: true, status: AsyncActionStatus.SUCCEEDED, user: { ...data } }
             console.log("Logged in as: ", auth)
             dispatch(Login(auth));
-            dispatch(ThunkGetTasks(data.access_token));
+            dispatch(ThunkGetTasks(data.token));
           }
         })
         .catch((error) => {
+          console.log("Error");
           console.log(error);
           dispatch(Status(AsyncActionStatus.FAILED));
           resolve(false);

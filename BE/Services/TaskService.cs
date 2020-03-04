@@ -42,7 +42,10 @@ namespace Tasker.Services {
         }
 
         public void Delete(int id) {
-            throw new NotImplementedException();
+            _context.Tasks.Remove(_context.Tasks.FirstOrDefault(t => t.Id == id));
+            _context.SaveChanges();
+
+            return;
         }
 
         public IEnumerable<Data.Task> GetAll() {

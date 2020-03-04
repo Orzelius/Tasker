@@ -58,7 +58,14 @@ namespace Tasker.Controllers {
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id) {
+        public IActionResult Delete(int id) {
+            try {
+                _taskService.Delete(id);
+                return Ok();
+            }
+            catch (AppException ex) {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

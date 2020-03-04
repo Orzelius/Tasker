@@ -10,6 +10,7 @@ namespace Tasker.Data.MappingProfiles {
     public class ProjectProfile : Profile {
         public ProjectProfile() {
             CreateMap<Task, TaskCreateModel>();
+            CreateMap<TaskCreateModel, Task>();
             CreateMap<User, UserModel>();
             CreateMap<RegisterModel, User>();
             CreateMap<UpdateModel, User>();

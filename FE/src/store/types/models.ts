@@ -13,7 +13,7 @@ export interface Auth {
 }
 
 export interface User {
-  access_token: string
+  token: string
   created_at: string
   firstname: string
   id: string

@@ -8,7 +8,7 @@ import { Redirect } from 'react-router-dom';
 const Dasboard: React.FC = () => {
   const state = useSelector((state: AppState) => state);
 
-  if (!state.auth.loggedIn || !state.auth.user?.access_token) {
+  if (!state.auth.loggedIn || !state.auth.user?.token) {
     return <Redirect to='/home' />
   }
   else {
@@ -21,7 +21,7 @@ const Dasboard: React.FC = () => {
           </div>
 
           <div className="col s12 m5 offset-m1">
-            <CreateTaskFC access_token={state.auth.user?.access_token}></CreateTaskFC>
+            <CreateTaskFC access_token={state.auth.user?.token}></CreateTaskFC>
           </div>
 
         </div>

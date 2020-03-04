@@ -10,7 +10,7 @@ type TParams = { id: string };
 
 function TaskEdit({ match }: RouteComponentProps<TParams>) {
   let task = useSelector((state: AppState) => state.tasks).find(x => x.id.toString() === match.params.id);
-  let access_token = useSelector((state: AppState) => state.auth.user?.access_token);
+  let access_token = useSelector((state: AppState) => state.auth.user?.token);
 
   const [state, setState] = React.useState({task: {title: task?.title, desc: task?.desc, marked_as_done: false, id: task?.id}, error: false, errorMsg: ""});
   const history = useHistory();

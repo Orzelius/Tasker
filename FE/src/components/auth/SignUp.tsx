@@ -43,7 +43,7 @@ const SignUp: React.FC = () => {
     console.log(state);
     const user: User = {
       username: state.firstname,
-      access_token: '',
+      token: '',
       created_at: '',
       firstname: state.firstname,
       id: '',

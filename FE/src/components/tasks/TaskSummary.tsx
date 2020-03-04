@@ -23,7 +23,7 @@ function getDate(unix: number | undefined): string {
 
 const TaskSummary: React.FC<props> = ({ task }) => {
   const dispatch = useDispatch();
-  const access_token = useSelector((state: AppState) => (state.auth.user?.access_token));
+  const access_token = useSelector((state: AppState) => (state.auth.user?.token));
 
   if(!access_token){
     return(
