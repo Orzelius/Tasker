@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Tasker.Models.Users
-{
+namespace Tasker.Models.Users {
     public class AuthenticateModel
     {
         [Required]

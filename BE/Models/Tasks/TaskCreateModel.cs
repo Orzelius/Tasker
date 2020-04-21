@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Tasker.Models.Tasks {
+﻿namespace Tasker.Models.Tasks {
     public class TaskCreateModel {
         public string Title { get; set; }
         public string Desc { get; set; }

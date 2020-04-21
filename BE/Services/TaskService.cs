@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Tasker.Data;
 using Tasker.Helpers;
 
 //GET /tasks Get list of tasks

@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Tasker.Helpers
-{
+namespace Tasker.Helpers {
     public class SqliteDataContext : DataContext
     {
         public SqliteDataContext(IConfiguration configuration) : base(configuration) { }

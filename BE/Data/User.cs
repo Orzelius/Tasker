@@ -1,5 +1,4 @@
-namespace Tasker.Data
-{
+namespace Tasker.Data {
     public class User
     {
         public int Id { get; set; }

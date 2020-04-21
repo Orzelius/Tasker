@@ -1,8 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Tasker.Migrations.SqlServerMigrations
-{
+namespace Tasker.Migrations.SqlServerMigrations {
     public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

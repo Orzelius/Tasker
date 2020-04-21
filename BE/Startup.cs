@@ -1,20 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Linq;
+using System.Text;
+using Tasker.Data.MappingProfiles;
 using Tasker.Helpers;
 using Tasker.Services;
-using AutoMapper;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System;
-using Tasker.Data;
-using System.Linq;
-using Tasker.Data.MappingProfiles;
 
 namespace Tasker {
     public class Startup {

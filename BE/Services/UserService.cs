@@ -4,8 +4,7 @@ using System.Linq;
 using Tasker.Data;
 using Tasker.Helpers;
 
-namespace Tasker.Services
-{
+namespace Tasker.Services {
     public interface IUserService
     {
         User Authenticate(string username, string password);

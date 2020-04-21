@@ -1,6 +1,5 @@
-namespace Tasker.Models.Users
-{
-  public class UserModel
+namespace Tasker.Models.Users {
+    public class UserModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

@@ -2,8 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Tasker.Data;
 
-namespace Tasker.Helpers
-{
+namespace Tasker.Helpers {
     public class DataContext : DbContext
     {
         protected readonly IConfiguration Configuration;

@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
-using System.IdentityModel.Tokens.Jwt;
-using Tasker.Helpers;
-using Microsoft.Extensions.Options;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Tasker.Services;
-using Tasker.Models.Users;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using Tasker.Data;
+using Tasker.Helpers;
+using Tasker.Models.Users;
+using Tasker.Services;
 
-namespace Tasker.Controllers
-{
+namespace Tasker.Controllers {
     [Authorize]
     [ApiController]
     [Route("/users")]
