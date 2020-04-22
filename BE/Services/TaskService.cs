@@ -40,9 +40,11 @@ namespace Tasker.Services {
         }
 
         public void Delete(int id) {
-            _context.Tasks.Remove(_context.Tasks.FirstOrDefault(t => t.Id == id));
-            _context.SaveChanges();
-
+            try {
+                _context.Tasks.Remove(_context.Tasks.FirstOrDefault(t => t.Id == id));
+                _context.SaveChanges();
+            }
+            catch { }
             return;
         }
 

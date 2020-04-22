@@ -33,6 +33,7 @@ namespace Tasker.Controllers {
             _appSettings = appSettings.Value;
         }
 
+        //  POST /users/authenticate
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]AuthenticateModel model)
@@ -67,6 +68,7 @@ namespace Tasker.Controllers {
             });
         }
 
+        //  POST /users/register
         [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody]RegisterModel model)
@@ -87,6 +89,8 @@ namespace Tasker.Controllers {
             }
         }
 
+
+        //  GET /users
         [AllowAnonymous]
         [HttpGet]
         public IActionResult GetAll()
@@ -96,6 +100,7 @@ namespace Tasker.Controllers {
             return Ok(model);
         }
 
+        // GET /users/1
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -104,6 +109,7 @@ namespace Tasker.Controllers {
             return Ok(model);
         }
 
+        // PUT /users/1 (God only knows if this works)
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody]UpdateModel model)
         {
@@ -124,6 +130,7 @@ namespace Tasker.Controllers {
             }
         }
 
+        // DELETE /users/1
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

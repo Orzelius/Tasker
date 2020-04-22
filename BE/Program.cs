@@ -13,7 +13,7 @@ namespace Tasker {
                     webBuilder.UseStartup<Startup>()
                         .UseKestrel()
                         .UseIISIntegration()
-                        .UseUrls("http://localhost:4000");
+                        .UseUrls("http://*:4000");
                 });
     }
 }

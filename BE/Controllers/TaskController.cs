@@ -19,20 +19,15 @@ namespace Tasker.Controllers {
             _taskService = taskService;
         }
 
-        // GET: api/Task
+        // GET: /task
         [HttpGet]
         [AllowAnonymous]
         public IActionResult GetAll() {
             return Ok(_taskService.GetAll());
         }
 
-        // GET: api/Task/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id) {
-            return "value";
-        }
 
-        // POST: api/Task
+        // POST: /task
         [HttpPost]
         public IActionResult Post([FromBody] TaskCreateModel model) {
             var task = _mapper.Map<Data.Task>(model);
@@ -46,12 +41,8 @@ namespace Tasker.Controllers {
             }
         }
 
-        // PUT: api/Task/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value) {
-        }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: /task/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {
             try {
